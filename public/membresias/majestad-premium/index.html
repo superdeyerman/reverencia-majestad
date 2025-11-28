@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <title>Membresía Majestad Premium | Reverencia Majestad</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+  <!-- CSS global de tu sitio -->
+  <link rel="stylesheet" href="/assets/css/core.css">
+  <link rel="stylesheet" href="/assets/css/versace-theme.css">
+  <link rel="stylesheet" href="/assets/css/components.css">
+  <link rel="stylesheet" href="/assets/css/utilities.css">
+  <link rel="stylesheet" href="/assets/css/responsive.css">
+</head>
+<body class="rm-body">
+  <main class="rm-page rm-page-center">
+    <section class="rm-card rm-card-lg rm-card-glow">
+      <header class="rm-card-header rm-text-center">
+        <h1 id="plan-title" class="rm-title-xl">Membresía Majestad Premium</h1>
+        <p id="plan-description" class="rm-text-muted mt-2">
+          Cargando detalles del plan...
+        </p>
+      </header>
+
+      <div class="rm-card-body mt-4 grid-2">
+        <div>
+          <h2 class="rm-title-md">Lo que incluye</h2>
+          <ul id="plan-benefits" class="rm-list rm-list-check mt-2">
+            <!-- Beneficios desde Firestore -->
+          </ul>
+        </div>
+
+        <div class="rm-price-box">
+          <p class="rm-text-sm rm-text-muted">Inversión</p>
+          <p class="rm-price">
+            <span id="plan-moneda">CLP</span>
+            <span id="plan-precio">0</span>
+          </p>
+          <p class="rm-text-sm" id="plan-periodo">/ mensual</p>
+
+          <button id="btn-pagar" class="rm-btn rm-btn-primary rm-btn-full mt-3">
+            Quiero esta membresía
+          </button>
+
+          <p class="rm-text-xs rm-text-muted mt-2">
+            Serás redirigido a tu pasarela de pago segura (MercadoPago / Webpay).
+          </p>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <!-- Script para traer la membresía desde Firestore -->
+  <script type="module">
+    import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-app.js";
+    import { getFirestore, doc, getDoc } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore.js";
+
+    const firebaseConfig = {
+      apiKey: "AIzaSyBbNoKeQVIl_y4lj09noUGHl3s1J6LzA94",
+      authDomain: "reverenciamajestad-dd2ba.firebaseapp.com",
+      projectId: "reverenciamajestad-dd2ba",
+      storageBucket: "reverenciamajestad-dd2ba.appspot.com",
+      messagingSenderId: "3743981015",
+      appId: "1:3743981015:web:6045b4e7fa15ef06273f92"
+    };
+
+    const app = initializeApp(firebaseConfig);
+    const db = getFirestore(app);
+
+    async function cargarMembresia() {
+      try {
+        const ref = doc(db, "membresias", "majestad-premium");
+        const snap = await getDoc(ref);
+
+        if (!snap.exists()) {
+          console.error("No se encontró la membresía 'majestad-premium'");
+          document.getElementById("plan-description").textContent =
+            "No se encontraron los datos de esta membresía. Intenta más tarde.";
+          return;
+        }
+
+        const data = snap.data();
+
+        // Asignar textos
+        document.getElementById("plan-title").textContent = data.nombre || "Club Majestad Premium";
+        document.getElementById("plan-description").textContent = data.descripcion || "";
+        document.getElementById("plan-moneda").textContent = data.moneda || "CLP";
+        document.getElementById("plan-precio").textContent = data.precio?.toLocaleString("es-CL") || "0";
+        document.getElementById("plan-periodo").textContent = data.periodo
+          ? `/ ${data.periodo}`
+          : "";
+
+        // Beneficios (array)
+        const lista = document.getElementById("plan-benefits");
+        lista.innerHTML = "";
+        if (Array.isArray(data.beneficios)) {
+          data.beneficios.forEach((beneficio) => {
+            const li = document.createElement("li");
+            li.textContent = beneficio;
+            lista.appendChild(li);
+          });
+        }
+
+        // Botón de pago
+        const btnPagar = document.getElementById("btn-pagar");
+        if (data.urlPago) {
+          btnPagar.addEventListener("click", () => {
+            window.location.href = data.urlPago;
+          });
+        } else {
+          btnPagar.disabled = true;
+          btnPagar.textContent = "Pago no disponible";
+        }
+      } catch (error) {
+        console.error("Error cargando la membresía:", error);
+      }
+    }
+
+    cargarMembresia();
+  </script>
+</body>
+</html>

@@ -1,0 +1,468 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Dashboard Educativo - Estudiante</title>
+  <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;600;700&family=Playfair+Display:wght@700&display=swap" rel="stylesheet">
+  <style>
+    /* Reset and base styles */
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+    body {
+      font-family: 'Montserrat', sans-serif;
+      font-size: 14px;
+      font-weight: 300;
+      line-height: 1.6;
+      color: #000000;
+      background-color: #FAFAFA;
+      max-width: 1280px;
+      margin: 0 auto;
+      padding: 0 30px;
+    }
+    .container {
+      max-width: 1280px;
+      margin: 0 auto;
+      padding: 0 30px;
+    }
+    h1 {
+      font-family: 'Playfair Display', serif;
+      font-size: 48px;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 3px;
+      margin-bottom: 40px;
+      text-align: center;
+    }
+    h2 {
+      font-family: 'Playfair Display', serif;
+      font-size: 32px;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 2px;
+      margin-bottom: 24px;
+    }
+    h3 {
+      font-size: 18px;
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+      margin-bottom: 16px;
+    }
+    p {
+      margin-bottom: 16px;
+    }
+    .section {
+      margin-bottom: 80px;
+    }
+    .grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+      gap: 30px;
+    }
+    .card {
+      background-color: #FFFFFF;
+      border: 1px solid #E0DCCF;
+      padding: 24px;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+    }
+    .card-header {
+      margin-bottom: 16px;
+    }
+    .metric-value {
+      font-size: 36px;
+      font-weight: 700;
+      color: #AA0000;
+      margin-bottom: 8px;
+    }
+    .metric-label {
+      font-size: 12px;
+      text-transform: uppercase;
+      letter-spacing: 1.5px;
+      color: #000000;
+    }
+    .progress-bar {
+      width: 100%;
+      height: 8px;
+      background-color: #E0DCCF;
+      border-radius: 4px;
+      overflow: hidden;
+      margin: 8px 0;
+    }
+    .progress-fill {
+      height: 100%;
+      background-color: #AA0000;
+      transition: width 0.3s ease;
+    }
+    .btn {
+      display: inline-block;
+      padding: 12px 24px;
+      background-color: transparent;
+      border: 1px solid #000000;
+      color: #000000;
+      text-decoration: none;
+      font-size: 16px;
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 2px;
+      cursor: pointer;
+      transition: all 0.3s ease;
+    }
+    .btn:hover {
+      background-color: #000000;
+      color: #FAFAFA;
+    }
+    .btn-primary {
+      background-color: #AA0000;
+      border-color: #AA0000;
+      color: #FAFAFA;
+    }
+    .btn-primary:hover {
+      background-color: #000000;
+      border-color: #000000;
+    }
+    .chart-container {
+      margin: 24px 0;
+    }
+    canvas {
+      max-width: 100%;
+      height: auto;
+    }
+    .task-list {
+      list-style: none;
+    }
+    .task-item {
+      display: flex;
+      align-items: center;
+      margin-bottom: 12px;
+    }
+    .task-checkbox {
+      margin-right: 12px;
+      width: 16px;
+      height: 16px;
+      border: 1px solid #000000;
+      background-color: #FAFAFA;
+      cursor: pointer;
+    }
+    .task-checkbox:checked {
+      background-color: #AA0000;
+    }
+    .achievement-badge {
+      display: inline-block;
+      padding: 8px 16px;
+      background-color: #C9AE61;
+      color: #000000;
+      font-size: 12px;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+      margin-right: 8px;
+      margin-bottom: 8px;
+    }
+    .time-distribution {
+      display: flex;
+      justify-content: space-between;
+      margin-top: 16px;
+    }
+    .time-item {
+      text-align: center;
+      flex: 1;
+    }
+    .time-bar {
+      height: 20px;
+      background-color: #E0DCCF;
+      margin-bottom: 8px;
+      position: relative;
+    }
+    .time-fill {
+      height: 100%;
+      background-color: #AA0000;
+    }
+    .quick-actions {
+      display: flex;
+      justify-content: center;
+      gap: 16px;
+      flex-wrap: wrap;
+    }
+    @media (max-width: 768px) {
+      body {
+        padding: 0 16px;
+      }
+      .container {
+        padding: 0 16px;
+      }
+      h1 {
+        font-size: 36px;
+        letter-spacing: 2px;
+      }
+      .grid {
+        grid-template-columns: 1fr;
+      }
+      .quick-actions {
+        flex-direction: column;
+        align-items: center;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <h1>Dashboard Educativo</h1>
+
+    <!-- Métricas del Estudiante -->
+    <section class="section">
+      <h2>Métricas del Estudiante</h2>
+      <div class="grid">
+        <div class="card">
+          <div class="card-header">
+            <div class="metric-value" id="promedio">8.5</div>
+            <div class="metric-label">Promedio General</div>
+          </div>
+        </div>
+        <div class="card">
+          <div class="card-header">
+            <div class="metric-value" id="horas-estudio">45</div>
+            <div class="metric-label">Horas de Estudio Este Mes</div>
+          </div>
+        </div>
+        <div class="card">
+          <div class="card-header">
+            <div class="metric-value" id="tareas-completadas">12/15</div>
+            <div class="metric-label">Tareas Completadas vs Pendientes</div>
+          </div>
+        </div>
+        <div class="card">
+          <div class="card-header">
+            <div class="metric-value" id="progreso-global">75%</div>
+            <div class="metric-label">Nivel de Progreso Global</div>
+          </div>
+          <div class="progress-bar">
+            <div class="progress-fill" style="width: 75%;"></div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Cursos Activos -->
+    <section class="section">
+      <h2>Cursos Activos</h2>
+      <div class="grid" id="cursos-container">
+        <!-- Cursos se cargarán dinámicamente -->
+      </div>
+    </section>
+
+    <!-- Gráficas de Rendimiento -->
+    <section class="section">
+      <h2>Gráficas de Rendimiento</h2>
+      <div class="grid">
+        <div class="card">
+          <h3>Horas de Estudio Semanal</h3>
+          <div class="chart-container">
+            <canvas id="weekly-chart" width="400" height="200"></canvas>
+          </div>
+        </div>
+        <div class="card">
+          <h3>Rendimiento Mensual</h3>
+          <div class="chart-container">
+            <canvas id="monthly-chart" width="400" height="200"></canvas>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Tareas Pendientes & Logros -->
+    <section class="section">
+      <div class="grid">
+        <div class="card">
+          <h3>Tareas Pendientes</h3>
+          <ul class="task-list" id="tareas-list">
+            <!-- Tareas se cargarán dinámicamente -->
+          </ul>
+        </div>
+        <div class="card">
+          <h3>Logros Recientes</h3>
+          <div id="logros-container">
+            <!-- Logros se cargarán dinámicamente -->
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Análisis de Tiempo de Estudio -->
+    <section class="section">
+      <h2>Análisis de Tiempo de Estudio</h2>
+      <div class="card">
+        <h3>Distribución del Tiempo</h3>
+        <div class="time-distribution">
+          <div class="time-item">
+            <div class="time-bar">
+              <div class="time-fill" style="width: 40%;"></div>
+            </div>
+            <div>Teoría (40%)</div>
+          </div>
+          <div class="time-item">
+            <div class="time-bar">
+              <div class="time-fill" style="width: 35%;"></div>
+            </div>
+            <div>Práctica (35%)</div>
+          </div>
+          <div class="time-item">
+            <div class="time-bar">
+              <div class="time-fill" style="width: 25%;"></div>
+            </div>
+            <div>Evaluaciones (25%)</div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Acciones Rápidas -->
+    <section class="section">
+      <h2>Acciones Rápidas</h2>
+      <div class="quick-actions">
+        <button class="btn btn-primary" onclick="alert('Accediendo a clases...')">Acceder a Clases</button>
+        <button class="btn" onclick="alert('Entregando tarea...')">Entregar Tarea</button>
+        <button class="btn" onclick="alert('Viendo calificaciones...')">Ver Calificaciones</button>
+      </div>
+    </section>
+  </div>
+
+  <script>
+    // Datos simulados
+    const cursos = [
+      { nombre: 'Matemáticas Avanzadas', progreso: 85, estado: 'activo' },
+      { nombre: 'Historia del Arte', progreso: 60, estado: 'activo' },
+      { nombre: 'Programación Web', progreso: 90, estado: 'pausado' },
+      { nombre: 'Inglés Intermedio', progreso: 70, estado: 'activo' }
+    ];
+
+    const tareas = [
+      { id: 1, texto: 'Completar ejercicio de álgebra', completada: false },
+      { id: 2, texto: 'Leer capítulo 5 de historia', completada: true },
+      { id: 3, texto: 'Desarrollar proyecto web', completada: false },
+      { id: 4, texto: 'Practicar vocabulario inglés', completada: false }
+    ];
+
+    const logros = [
+      { fecha: '2023-10-15', tipo: 'Certificación', descripcion: 'Completado curso básico de matemáticas' },
+      { fecha: '2023-10-10', tipo: 'Logro', descripcion: '100% en examen de historia' },
+      { fecha: '2023-10-05', tipo: 'Participación', descripcion: 'Asistencia perfecta al mes' }
+    ];
+
+    const horasSemanales = [8, 6, 10, 7, 9, 5, 8];
+    const rendimientoMensual = [75, 80, 85, 78, 90, 88];
+
+    // Cargar cursos
+    function cargarCursos() {
+      const container = document.getElementById('cursos-container');
+      cursos.forEach(curso => {
+        const card = document.createElement('div');
+        card.className = 'card';
+        card.innerHTML = `
+          <h3>${curso.nombre}</h3>
+          <p>Progreso: ${curso.progreso}%</p>
+          <div class="progress-bar">
+            <div class="progress-fill" style="width: ${curso.progreso}%;"></div>
+          </div>
+          <p>Estado: ${curso.estado}</p>
+          <button class="btn" onclick="alert('Yendo a la clase de ${curso.nombre}')">Ir a Clase</button>
+        `;
+        container.appendChild(card);
+      });
+    }
+
+    // Cargar tareas
+    function cargarTareas() {
+      const container = document.getElementById('tareas-list');
+      tareas.forEach(tarea => {
+        const li = document.createElement('li');
+        li.className = 'task-item';
+        li.innerHTML = `
+          <input type="checkbox" class="task-checkbox" id="tarea-${tarea.id}" ${tarea.completada ? 'checked' : ''}>
+          <label for="tarea-${tarea.id}">${tarea.texto}</label>
+        `;
+        container.appendChild(li);
+      });
+    }
+
+    // Cargar logros
+    function cargarLogros() {
+      const container = document.getElementById('logros-container');
+      logros.forEach(logro => {
+        const badge = document.createElement('div');
+        badge.className = 'achievement-badge';
+        badge.innerHTML = `
+          <strong>${logro.tipo}</strong><br>
+          ${logro.fecha}: ${logro.descripcion}
+        `;
+        container.appendChild(badge);
+      });
+    }
+
+    // Dibujar gráfica semanal
+    function dibujarGraficaSemanal() {
+      const canvas = document.getElementById('weekly-chart');
+      const ctx = canvas.getContext('2d');
+      const width = canvas.width;
+      const height = canvas.height;
+      const maxHoras = Math.max(...horasSemanales);
+      const barWidth = width / horasSemanales.length - 10;
+
+      ctx.clearRect(0, 0, width, height);
+
+      horasSemanales.forEach((horas, index) => {
+        const barHeight = (horas / maxHoras) * (height - 40);
+        const x = index * (barWidth + 10) + 5;
+        const y = height - barHeight - 20;
+
+        ctx.fillStyle = '#AA0000';
+        ctx.fillRect(x, y, barWidth, barHeight);
+
+        ctx.fillStyle = '#000000';
+        ctx.font = '12px Montserrat';
+        ctx.textAlign = 'center';
+        ctx.fillText(horas, x + barWidth / 2, y - 5);
+        ctx.fillText(['L', 'M', 'M', 'J', 'V', 'S', 'D'][index], x + barWidth / 2, height - 5);
+      });
+    }
+
+    // Dibujar gráfica mensual
+    function dibujarGraficaMensual() {
+      const canvas = document.getElementById('monthly-chart');
+      const ctx = canvas.getContext('2d');
+      const width = canvas.width;
+      const height = canvas.height;
+      const maxRendimiento = Math.max(...rendimientoMensual);
+      const barWidth = width / rendimientoMensual.length - 10;
+
+      ctx.clearRect(0, 0, width, height);
+
+      rendimientoMensual.forEach((rendimiento, index) => {
+        const barHeight = (rendimiento / maxRendimiento) * (height - 40);
+        const x = index * (barWidth + 10) + 5;
+        const y = height - barHeight - 20;
+
+        ctx.fillStyle = '#C9AE61';
+        ctx.fillRect(x, y, barWidth, barHeight);
+
+        ctx.fillStyle = '#000000';
+        ctx.font = '12px Montserrat';
+        ctx.textAlign = 'center';
+        ctx.fillText(rendimiento + '%', x + barWidth / 2, y - 5);
+        ctx.fillText((index + 1).toString(), x + barWidth / 2, height - 5);
+      });
+    }
+
+    // Inicializar dashboard
+    document.addEventListener('DOMContentLoaded', () => {
+      cargarCursos();
+      cargarTareas();
+      cargarLogros();
+      dibujarGraficaSemanal();
+      dibujarGraficaMensual();
+    });
+  </script>
+</body>
+</html>

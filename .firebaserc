@@ -1,5 +1,9 @@
 {
   "projects": {
-    "default": "reverenciamajestad-dd2ba"
-  }
+    "default": "reverenciamajestad-dd2ba",
+    "firebase use --add": "reverenciamajestad-dd2ba",
+    "firebase deploy --only hosting": "reverenciamajestad-dd2ba"
+  },
+  "targets": {},
+  "etags": {}
 }

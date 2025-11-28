@@ -1,0 +1,7 @@
+public/
+   admin/
+      produccion.html   ✔  (nuevo panel)
+      index.html
+      login.html
+      usuarios.js
+      firebase-config.js

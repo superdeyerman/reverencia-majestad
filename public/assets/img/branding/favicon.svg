@@ -1,0 +1,28 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 192 192">
+  <!-- Fondo dorado degradado -->
+  <defs>
+    <radialGradient id="goldGradient" cx="50%" cy="50%" r="50%">
+      <stop offset="0%" style="stop-color:#f6d46b;stop-opacity:1" />
+      <stop offset="100%" style="stop-color:#d4af37;stop-opacity:1" />
+    </radialGradient>
+    <linearGradient id="bgGradient" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#0c0c12;stop-opacity:1" />
+      <stop offset="100%" style="stop-color:#050509;stop-opacity:1" />
+    </linearGradient>
+  </defs>
+  
+  <!-- Fondo oscuro -->
+  <rect width="192" height="192" fill="url(#bgGradient)"/>
+  
+  <!-- Círculo dorado con borde -->
+  <circle cx="96" cy="96" r="85" fill="url(#goldGradient)" opacity="0.15"/>
+  <circle cx="96" cy="96" r="80" fill="none" stroke="url(#goldGradient)" stroke-width="2"/>
+  
+  <!-- Letras RM en estilo premium -->
+  <g font-family="Playfair Display, serif" font-size="72" font-weight="700" text-anchor="middle" dominant-baseline="central">
+    <text x="96" y="96" fill="#f6d46b" letter-spacing="8">RM</text>
+  </g>
+  
+  <!-- Brillo sutil -->
+  <circle cx="96" cy="96" r="80" fill="none" stroke="url(#goldGradient)" stroke-width="1" opacity="0.3" stroke-dasharray="5,5"/>
+</svg>

@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <title>Bienvenido al Club Majestad Premium | Reverencia Majestad</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+  <!-- Tus CSS principales (mismos que en la web principal) -->
+  <link rel="stylesheet" href="/assets/css/core.css">
+  <link rel="stylesheet" href="/assets/css/versace-theme.css">
+  <link rel="stylesheet" href="/assets/css/components.css">
+  <link rel="stylesheet" href="/assets/css/utilities.css">
+  <link rel="stylesheet" href="/assets/css/responsive.css">
+</head>
+<body class="rm-body">
+  <main class="rm-page rm-page-center">
+    <section class="rm-card rm-card-lg rm-card-glass rm-text-center">
+      <h1 class="rm-title-xl">Bienvenido al <span class="rm-gold">Club Majestad Premium</span></h1>
+      <p class="rm-text mt-2">
+        Tu membresía está <strong>activa</strong>.  
+        Desde ahora formas parte de la experiencia <span class="rm-gold">Reverencia Majestad</span>.
+      </p>
+
+      <p class="rm-text-muted mt-3">
+        Accede a tu panel para gestionar tus beneficios, cursos, reservas y contenido exclusivo.
+      </p>
+
+      <div class="mt-4">
+        <a id="btn-dashboard" href="/admin/index.html" class="rm-btn rm-btn-primary rm-btn-lg">
+          Ir al panel Majestad
+        </a>
+      </div>
+    </section>
+  </main>
+
+  <!-- Script para traer la URL del dashboard desde Firestore -->
+  <script type="module">
+    // 1) Importar Firebase (usa la misma versión que ya usas en tus otros JS)
+    import { initializeApp } from "https://www.gstatic.com/firebasejs/10.14.0/firebase-app.js";
+    import { getFirestore, doc, getDoc } from "https://www.gstatic.com/firebasejs/10.14.0/firebase-firestore.js";
+
+    // 2) Configuración de tu proyecto (COPIA LA MISMA QUE YA TIENES en tu otro archivo)
+    const firebaseConfig = {
+      apiKey: "AIzaSyBbNoKeQVIl_y4lj09noUGHl3s1J6LzA94",
+      authDomain: "reverenciamajestad-dd2ba.firebaseapp.com",
+      projectId: "reverenciamajestad-dd2ba",
+      storageBucket: "reverenciamajestad-dd2ba.appspot.com",
+      messagingSenderId: "3743981015",
+      appId: "1:3743981015:web:6045b4e7fa15ef06273f92"
+    };
+
+    const app = initializeApp(firebaseConfig);
+    const db = getFirestore(app);
+
+    // 3) Leer documento "majestad-premium" de la colección "membresias"
+    async function cargarDashboard() {
+      try {
+        const ref = doc(db, "membresias", "majestad-premium");
+        const snap = await getDoc(ref);
+
+        if (snap.exists()) {
+          const data = snap.data();
+          const btnDashboard = document.getElementById("btn-dashboard");
+
+          if (data.urlDashboard) {
+            btnDashboard.href = data.urlDashboard; // https://reverenciamajestad.com/membresias/majestad-premium
+          }
+        } else {
+          console.warn("No existe el documento 'majestad-premium' en 'membresias'.");
+        }
+      } catch (err) {
+        console.error("Error cargando membresía:", err);
+      }
+    }
+
+    cargarDashboard();
+  </script>
+</body>
+</html>

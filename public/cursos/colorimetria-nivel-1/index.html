@@ -1,0 +1,446 @@
+<h1>Clase Principal: Colorimetría Nivel 1</h1>
+<p>Aquí irá el contenido del curso</p>
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <title>Colorimetría Nivel 1 | Reverencia Majestad</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+  <!-- Tipografías -->
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@500;700&family=Montserrat:wght@300;400;500;600&display=swap" rel="stylesheet">
+
+  <!-- CSS globales desde raíz (subimos 2 niveles: ../../ ) -->
+  <link rel="stylesheet" href="../../assets/css/core.css" />
+  <link rel="stylesheet" href="../../assets/css/versace-theme.css" />
+  <link rel="stylesheet" href="../../assets/css/components.css" />
+  <link rel="stylesheet" href="../../assets/css/utilities.css" />
+  <link rel="stylesheet" href="../../assets/css/responsive.css" />
+
+  <style>
+    body {
+      margin: 0;
+      min-height: 100vh;
+      background: radial-gradient(circle at top, rgba(212, 175, 55, 0.15), transparent 55%), #050509;
+      color: #f6f6f6;
+      font-family: "Montserrat", system-ui, -apple-system, BlinkMacSystemFont, sans-serif;
+    }
+
+    .rm-course-shell {
+      max-width: 1100px;
+      margin: 0 auto;
+      padding: 32px 16px 56px;
+    }
+
+    .rm-breadcrumb {
+      font-size: 0.78rem;
+      color: #b6b6c5;
+      text-transform: uppercase;
+      letter-spacing: 0.18em;
+      margin-bottom: 1rem;
+    }
+
+    .rm-breadcrumb a {
+      color: #b6b6c5;
+      text-decoration: none;
+    }
+
+    .rm-breadcrumb span {
+      opacity: 0.7;
+    }
+
+    .rm-course-header {
+      display: grid;
+      grid-template-columns: minmax(0, 2.5fr) minmax(0, 1.5fr);
+      gap: 2rem;
+      align-items: center;
+      margin-bottom: 2.5rem;
+    }
+
+    .rm-course-title {
+      font-family: "Playfair Display", serif;
+      font-size: 2.1rem;
+      margin: 0 0 0.75rem;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+    }
+
+    .rm-course-sub {
+      color: #b6b6c5;
+      font-size: 0.95rem;
+      line-height: 1.6;
+      margin-bottom: 0.8rem;
+    }
+
+    .rm-course-meta {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.35rem 0.8rem;
+      font-size: 0.78rem;
+      color: #b6b6c5;
+    }
+
+    .rm-pill {
+      border-radius: 999px;
+      padding: 0.28rem 0.75rem;
+      border: 1px solid rgba(255, 255, 255, 0.16);
+      text-transform: uppercase;
+      letter-spacing: 0.14em;
+      font-size: 0.68rem;
+    }
+
+    .rm-pill-gold {
+      border-color: rgba(212, 175, 55, 0.7);
+      color: #f6d46b;
+    }
+
+    .rm-course-card {
+      background: rgba(10, 10, 16, 0.95);
+      border-radius: 20px;
+      padding: 1.5rem 1.6rem;
+      border: 1px solid rgba(255, 255, 255, 0.06);
+      box-shadow: 0 18px 45px rgba(0, 0, 0, 0.85);
+    }
+
+    .rm-price {
+      font-size: 1.6rem;
+      font-weight: 600;
+    }
+
+    .rm-price small {
+      font-size: 0.8rem;
+      color: #b6b6c5;
+      margin-left: 0.2rem;
+    }
+
+    .rm-progress-label {
+      font-size: 0.78rem;
+      text-transform: uppercase;
+      letter-spacing: 0.16em;
+      color: #b6b6c5;
+      margin-bottom: 0.4rem;
+      margin-top: 1.2rem;
+    }
+
+    .rm-progress-bar {
+      width: 100%;
+      height: 10px;
+      border-radius: 999px;
+      background: rgba(255, 255, 255, 0.06);
+      overflow: hidden;
+      position: relative;
+    }
+
+    .rm-progress-fill {
+      height: 100%;
+      border-radius: 999px;
+      background: linear-gradient(135deg, #f6d46b, #d4af37);
+      width: 0;
+      transition: width 0.6s ease-out;
+    }
+
+    .rm-actions {
+      margin-top: 1.4rem;
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.6rem;
+    }
+
+    .rm-btn-gold {
+      border-radius: 999px;
+      border: 0;
+      cursor: pointer;
+      padding: 0.65rem 1.3rem;
+      font-size: 0.82rem;
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 0.14em;
+      background: linear-gradient(135deg, #f6d46b, #d4af37);
+      color: #050509;
+      box-shadow: 0 14px 35px rgba(0, 0, 0, 0.9);
+      transition: transform 0.12s ease, box-shadow 0.12s ease, filter 0.12s ease;
+    }
+
+    .rm-btn-gold:hover {
+      transform: translateY(-1px);
+      filter: brightness(1.05);
+      box-shadow: 0 20px 40px rgba(0, 0, 0, 0.95);
+    }
+
+    .rm-btn-ghost {
+      border-radius: 999px;
+      border: 1px solid rgba(255, 255, 255, 0.3);
+      background: transparent;
+      color: #f6f6f6;
+      padding: 0.65rem 1.1rem;
+      font-size: 0.8rem;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      cursor: pointer;
+      transition: background 0.12s ease, transform 0.12s ease;
+    }
+
+    .rm-btn-ghost:hover {
+      background: rgba(255, 255, 255, 0.05);
+      transform: translateY(-1px);
+    }
+
+    .rm-layout {
+      display: grid;
+      grid-template-columns: minmax(0, 2.2fr) minmax(0, 1.4fr);
+      gap: 2rem;
+    }
+
+    .rm-section-block {
+      background: rgba(10, 10, 16, 0.9);
+      border-radius: 20px;
+      padding: 1.5rem 1.7rem;
+      border: 1px solid rgba(255, 255, 255, 0.06);
+      box-shadow: 0 18px 40px rgba(0, 0, 0, 0.85);
+      margin-bottom: 1.4rem;
+    }
+
+    .rm-section-block h2 {
+      margin: 0 0 0.6rem;
+      font-size: 1.05rem;
+      letter-spacing: 0.16em;
+      text-transform: uppercase;
+    }
+
+    .rm-section-block p {
+      margin: 0 0 0.5rem;
+      font-size: 0.9rem;
+      color: #b6b6c5;
+    }
+
+    .rm-module-list {
+      margin: 0.6rem 0 0;
+      padding: 0;
+      list-style: none;
+      font-size: 0.88rem;
+    }
+
+    .rm-module-list li {
+      padding: 0.38rem 0;
+      border-bottom: 1px solid rgba(255, 255, 255, 0.06);
+      display: flex;
+      justify-content: space-between;
+      gap: 1rem;
+    }
+
+    .rm-module-list span {
+      color: #b6b6c5;
+      font-size: 0.8rem;
+    }
+
+    .rm-status-text {
+      margin-top: 0.8rem;
+      font-size: 0.78rem;
+      color: #777892;
+    }
+
+    .rm-error {
+      color: #ff4d6a;
+      font-size: 0.85rem;
+      margin-top: 0.8rem;
+    }
+
+    @media (max-width: 860px) {
+      .rm-course-header,
+      .rm-layout {
+        grid-template-columns: 1fr;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="rm-course-shell">
+    <div class="rm-breadcrumb">
+      <a href="/">Reverencia Majestad</a> · <span>Academia</span> · <span id="crumbCurso">Curso</span>
+    </div>
+
+    <div class="rm-course-header">
+      <div>
+        <h1 id="courseTitle" class="rm-course-title">Colorimetría Nivel 1</h1>
+        <p id="courseDescription" class="rm-course-sub">
+          Curso básico de colorimetría para entender los fundamentos y aplicar técnicas seguras.
+        </p>
+        <div class="rm-course-meta">
+          <span class="rm-pill rm-pill-gold" id="courseCategoria">Colorimetría</span>
+          <span class="rm-pill" id="courseNivel">Nivel básico</span>
+          <span class="rm-pill" id="courseEstado">Activo</span>
+        </div>
+      </div>
+
+      <aside class="rm-course-card">
+        <div>
+          <div style="font-size:0.78rem; text-transform:uppercase; letter-spacing:0.16em; color:#b6b6c5; margin-bottom:0.3rem;">
+            Inversión
+          </div>
+          <div class="rm-price">
+            <span id="coursePrecio">$249.000</span>
+            <small id="courseMoneda">CLP</small>
+          </div>
+        </div>
+
+        <div class="rm-progress-label">
+          Progreso general del curso
+        </div>
+        <div class="rm-progress-bar">
+          <div id="courseProgressFill" class="rm-progress-fill"></div>
+        </div>
+        <div style="margin-top:0.3rem; font-size:0.78rem; color:#b6b6c5;">
+          <span id="courseProgressText">0% completado</span>
+        </div>
+
+        <div class="rm-actions">
+          <button id="btnIrClase" class="rm-btn-gold">Ir a las clases</button>
+          <button id="btnIrTareas" class="rm-btn-ghost">Ver tareas</button>
+          <button id="btnIrCalificaciones" class="rm-btn-ghost">Ver calificaciones</button>
+        </div>
+
+        <div id="courseStatus" class="rm-status-text">
+          Cargando información del curso desde la Academia Reverencia Majestad...
+        </div>
+        <div id="courseError" class="rm-error"></div>
+      </aside>
+    </div>
+
+    <div class="rm-layout">
+      <section class="rm-section-block">
+        <h2>Qué vas a aprender</h2>
+        <p>
+          Este curso está diseñado para que desarrolles una base sólida en colorimetría aplicada a la peluquería profesional.
+          Puedes adaptar este texto luego según tus módulos reales.
+        </p>
+
+        <ul class="rm-module-list" id="moduleList">
+          <li>
+            <div>Fundamentos de colorimetría</div>
+            <span>Teoría · Base</span>
+          </li>
+          <li>
+            <div>Diagnóstico del cabello y pigmentos</div>
+            <span>Teoría + práctica</span>
+          </li>
+          <li>
+            <div>Neutralización, corrección y seguridad</div>
+            <span>Aplicación en modelos</span>
+          </li>
+          <li>
+            <div>Protocolo Reverencia Majestad</div>
+            <span>Servicio premium al cliente</span>
+          </li>
+        </ul>
+      </section>
+
+      <section class="rm-section-block">
+        <h2>Información general</h2>
+        <p id="courseInfo">
+          Duración sugerida: 4 semanas · Modalidad híbrida (online + práctica).
+          Tú puedes ajustar esta información según la realidad del curso.
+        </p>
+        <p class="rm-status-text">
+          Esta sección puede usarse para explicar modalidad, requisitos, materiales,
+          o todo lo relacionado a la experiencia de transformación del estudiante.
+        </p>
+      </section>
+    </div>
+  </div>
+
+  <!-- Firebase + lógica del curso -->
+  <script type="module">
+    import { firebaseConfig } from "../../admin/firebase-config.js";
+    import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-app.js";
+    import { getFirestore, doc, getDoc } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore.js";
+
+    const CURSO_ID = "colorimetria nivel 1";
+
+    const app = initializeApp(firebaseConfig);
+    const db = getFirestore(app);
+
+    const titleEl = document.getElementById("courseTitle");
+    const descEl = document.getElementById("courseDescription");
+    const catEl = document.getElementById("courseCategoria");
+    const nivelEl = document.getElementById("courseNivel");
+    const estadoEl = document.getElementById("courseEstado");
+    const precioEl = document.getElementById("coursePrecio");
+    const monedaEl = document.getElementById("courseMoneda");
+    const progressFillEl = document.getElementById("courseProgressFill");
+    const progressTextEl = document.getElementById("courseProgressText");
+    const statusEl = document.getElementById("courseStatus");
+    const errorEl = document.getElementById("courseError");
+    const crumbEl = document.getElementById("crumbCurso");
+
+    const btnIrClase = document.getElementById("btnIrClase");
+    const btnIrTareas = document.getElementById("btnIrTareas");
+    const btnIrCalificaciones = document.getElementById("btnIrCalificaciones");
+
+    let urlClasePrincipal = "#";
+    let urlTareas = "#";
+    let urlCalificaciones = "#";
+
+    async function cargarCurso() {
+      try {
+        const ref = doc(db, "cursos", CURSO_ID);
+        const snap = await getDoc(ref);
+
+        if (!snap.exists()) {
+          statusEl.textContent = "No se encontró la información del curso en la base de datos.";
+          return;
+        }
+
+        const data = snap.data();
+
+        titleEl.textContent = data.nombre || "Curso";
+        descEl.textContent = data.descripcion || "";
+        crumbEl.textContent = data.nombre || "Curso";
+        catEl.textContent = data.categoria || "General";
+        nivelEl.textContent = data.nivel ? `Nivel ${data.nivel}` : "Nivel";
+        estadoEl.textContent = data.estado || "Activo";
+
+        if (typeof data.precio === "number") {
+          precioEl.textContent = new Intl.NumberFormat("es-CL").format(data.precio);
+        }
+        if (data.moneda) {
+          monedaEl.textContent = data.moneda;
+        }
+
+        const progreso = typeof data.progresoPromedio === "number" ? data.progresoPromedio : 0;
+        progressFillEl.style.width = `${Math.min(Math.max(progreso, 0), 100)}%`;
+        progressTextEl.textContent = `${progreso}% completado`;
+
+        urlClasePrincipal = data.urlClasePrincipal || "#";
+        urlTareas = data.urlTareas || "#";
+        urlCalificaciones = data.urlCalificaciones || "#";
+
+        statusEl.textContent = "Curso cargado correctamente.";
+      } catch (err) {
+        console.error(err);
+        statusEl.textContent = "";
+        errorEl.textContent = "Ocurrió un error al cargar la información del curso.";
+      }
+    }
+
+    btnIrClase.addEventListener("click", () => {
+      if (urlClasePrincipal !== "#") {
+        window.location.href = urlClasePrincipal;
+      }
+    });
+
+    btnIrTareas.addEventListener("click", () => {
+      if (urlTareas !== "#") {
+        window.location.href = urlTareas;
+      }
+    });
+
+    btnIrCalificaciones.addEventListener("click", () => {
+      if (urlCalificaciones !== "#") {
+        window.location.href = urlCalificaciones;
+      }
+    });
+
+    cargarCurso();
+  </script>
+</body>
+</html>

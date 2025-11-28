@@ -1,0 +1,134 @@
+rules_version = '2';
+
+service cloud.firestore {
+  match /databases/{database}/documents {
+
+    // ==============
+    // HELPERS
+    // ==============
+    function isSignedIn() {
+      return request.auth != null;
+    }
+
+    function userDoc() {
+      // Doc del usuario logueado en /usuarios/{uid}
+      return get(/databases/$(database)/documents/usuarios/$(request.auth.uid));
+    }
+
+    function userRole() {
+      return userDoc().data.role;
+    }
+
+    function isAdmin() {
+      return isSignedIn() && userRole() == "admin";
+    }
+
+    function isProduccion() {
+      return isSignedIn() && userRole() == "produccion";
+    }
+
+    function isReservas() {
+      return isSignedIn() && userRole() == "reservas";
+    }
+
+    function isCliente() {
+      return isSignedIn() && userRole() == "cliente";
+    }
+
+    function isStaff() {
+      return isAdmin() || isProduccion() || isReservas();
+    }
+
+    // =========================
+    // USUARIOS (/usuarios/{uid})
+    // =========================
+    match /usuarios/{uid} {
+
+      // Ver perfil:
+      // - El propio usuario
+      // - O cualquier admin
+      allow read: if isAdmin() || (isSignedIn() && request.auth.uid == uid);
+
+      // Crear usuario:
+      // - Permitido para cualquiera autenticado (ej: registro)
+      //   o solo admin si prefieres manejarlo manualmente.
+      allow create: if isSignedIn();
+
+      // Actualizar:
+      // - Admin puede editar cualquier usuario (incluyendo cambiar rol)
+      // - Usuario normal solo puede editar su propio doc,
+      //   pero NO puede cambiar el campo "role"
+      allow update: if
+        isAdmin() ||
+        (
+          isSignedIn() &&
+          request.auth.uid == uid &&
+          // Evitar que cambie su propio rol
+          request.resource.data.role == resource.data.role
+        );
+
+      // Borrar usuarios: solo admin
+      allow delete: if isAdmin();
+    }
+
+    // =========================
+    // PRODUCTOS (/products/{id})
+    // =========================
+    match /products/{id} {
+
+      // Lectura:
+      // - Público: solo productos activos (status == "activo")
+      // - Staff: puede ver todo
+      allow read: if
+        (resource.data.status == "activo") ||
+        isStaff();
+
+      // Crear / actualizar / eliminar:
+      // - Solo admin o producción
+      allow create, update, delete: if isAdmin() || isProduccion();
+    }
+
+    // =========================
+    // RESERVAS (/reservas/{id})
+    // =========================
+    match /reservas/{id} {
+
+      // Estructura esperada:
+      // - campo clienteId = uid del usuario que hizo la reserva
+
+      // Crear reserva:
+      // - Cualquier usuario autenticado (cliente logueado)
+      allow create: if isSignedIn();
+
+      // Ver una reserva:
+      // - Admin o equipo de reservas: todas
+      // - Cliente: solo sus propias reservas
+      allow read: if
+        isAdmin() ||
+        isReservas() ||
+        (
+          isCliente() &&
+          isSignedIn() &&
+          resource.data.clienteId == request.auth.uid
+        );
+
+      // Actualizar:
+      // - Admin y reservas gestionan todo
+      // - Cliente solo puede, por ejemplo, cancelar su propia reserva
+      //   (si quieres limitar qué campos puede cambiar,
+      //    luego afinamos esta parte)
+      allow update: if
+        isAdmin() ||
+        isReservas() ||
+        (
+          isCliente() &&
+          isSignedIn() &&
+          resource.data.clienteId == request.auth.uid
+        );
+
+      // Borrar:
+      // - Solo admin
+      allow delete: if isAdmin();
+    }
+  }
+}

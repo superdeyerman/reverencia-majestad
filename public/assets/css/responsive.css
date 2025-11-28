@@ -1,0 +1,161 @@
+/* ============================================
+   RESPONSIVE DESIGN — REVERENCIA MAJESTAD
+   ============================================ */
+
+/* ============================================
+   TABLETS & MÓVILES GRANDES
+   max-width: 950px
+   ============================================ */
+
+@media (max-width: 950px) {
+
+  /* Ocultar menú y CTA, mostrar burger */
+  .rm-menu,
+  .rm-cta {
+    display: none;
+  }
+
+  .rm-burger {
+    display: flex;
+  }
+
+  /* Hero en columna */
+  .rm-hero-container {
+    grid-template-columns: 1fr;
+    text-align: center;
+    padding-top: 2rem;
+    gap: 2.5rem;
+  }
+
+  .rm-hero-text {
+    margin-inline: auto;
+  }
+
+  /* Botones centrados */
+  .rm-hero-buttons {
+    justify-content: center;
+  }
+
+  /* Imagen hero */
+  .rm-hero-frame {
+    max-width: 360px;
+    margin-inline: auto;
+  }
+
+  /* About y Contact en una sola columna */
+  .rm-about-grid,
+  .rm-contact-grid {
+    grid-template-columns: 1fr;
+  }
+}
+
+
+/* ============================================
+   MÓVILES — max-width: 600px
+   ============================================ */
+
+@media (max-width: 600px) {
+
+  .rm-nav {
+    padding-block: 0.9rem;
+  }
+
+  .rm-section {
+    padding-block: 3.5rem;
+  }
+
+  /* Grids de 3 columnas → 1 columna */
+  .grid-3 {
+    grid-template-columns: 1fr;
+  }
+
+  /* Títulos más pequeños */
+  .rm-section-title {
+    font-size: clamp(1.6rem, 5vw, 2rem);
+  }
+
+  /* HERO */
+  .rm-hero-title {
+    font-size: clamp(1.9rem, 7vw, 2.4rem);
+  }
+
+  .rm-hero-text {
+    font-size: 1rem;
+    max-width: 90%;
+    margin-inline: auto;
+  }
+
+  /* Pill más pequeña */
+  .rm-pill {
+    font-size: 0.65rem;
+    padding: 0.3rem 0.9rem;
+  }
+
+  /* Hero imagen */
+  .rm-hero-frame {
+    max-width: 320px;
+  }
+
+  /* Logo texto más pequeño */
+  .rm-logo-text .title {
+    font-size: 0.7rem;
+  }
+}
+
+
+/* ============================================
+   MÓVILES PEQUEÑOS — max-width: 420px
+   ============================================ */
+
+@media (max-width: 420px) {
+
+  .rm-nav {
+    padding-block: 0.7rem;
+  }
+
+  /* Hero title aún más responsivo */
+  .rm-hero-title {
+    font-size: clamp(1.7rem, 7vw, 2rem);
+  }
+
+  /* Botones */
+  .btn-primary,
+  .btn-outline {
+    width: 100%;
+    justify-content: center;
+    padding: 0.85rem 1rem;
+  }
+
+  /* Imagen hero */
+  .rm-hero-frame {
+    max-width: 280px;
+  }
+}
+/* ============================================
+   LOGO HERO EN MÓVILES
+   ============================================ */  
+   /* ============================
+   RESERVAS · RESPONSIVE
+   ============================ */
+
+@media (max-width: 768px) {
+  .rm-reserva-wrapper {
+    padding: 1.6rem 1.2rem;
+  }
+
+  .grid-2 {
+    grid-template-columns: 1fr;
+    gap: 1rem;
+  }
+
+  .rm-horarios-grid {
+    flex-direction: column;
+  }
+
+  .rm-horario-btn {
+    width: 100%;
+  }
+}
+/* ============================
+   FIN RESPONSIVE
+   ============================ */  

@@ -1,0 +1,646 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <title>Panel de Reservas | Reverencia Majestad</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+  <!-- Tipografías -->
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@500;700&family=Montserrat:wght@300;400;500;600&display=swap" rel="stylesheet">
+
+  <!-- Reutilizamos tu mismo theme -->
+  <link rel="stylesheet" href="../assets/css/core.css">
+  <link rel="stylesheet" href="../assets/css/versace-theme.css">
+  <link rel="stylesheet" href="../assets/css/components.css">
+  <link rel="stylesheet" href="../assets/css/utilities.css">
+  <link rel="stylesheet" href="../assets/css/responsive.css">
+
+  <style>
+    body {
+      background: #050509;
+      color: #f6f6f6;
+      font-family: "Montserrat", system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+    }
+
+    .admin-shell {
+      min-height: 100vh;
+      padding: 32px 16px 48px;
+    }
+
+    .admin-topbar {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      max-width: 1200px;
+      margin: 0 auto 24px;
+    }
+
+    .admin-badge {
+      font-size: 12px;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: #f6d46b;
+      opacity: 0.9;
+    }
+
+    .admin-title {
+      font-family: "Playfair Display", serif;
+      font-size: 26px;
+      font-weight: 600;
+    }
+
+    .admin-subtitle {
+      font-size: 13px;
+      color: #b6b6c5;
+      margin-top: 4px;
+    }
+
+    .btn-ghost {
+      border-radius: 999px;
+      border-radius: 999px;
+      border: 1px solid rgba(255, 255, 255, 0.16);
+      font-size: 0.75rem;
+      color: #b6b6c5;
+    }
+
+    .rm-logout-btn {
+      border: 0;
+      padding: 0.45rem 0.9rem;
+      border-radius: 999px;
+      cursor: pointer;
+      background: transparent;
+      color: #ff4d6a;
+      font-size: 0.8rem;
+      border: 1px solid rgba(255, 77, 106, 0.5);
+      text-transform: uppercase;
+      letter-spacing: 0.14em;
+      transition: background 0.15s ease, color 0.15s ease, transform 0.08s ease;
+    }
+
+    .rm-logout-btn:hover {
+      background: rgba(255, 77, 106, 0.12);
+      transform: translateY(-1px);
+    }
+
+    .rm-main-content {
+      padding: 2.4rem 2.8rem 3rem;
+    }
+
+    .rm-section {
+      display: none;
+      opacity: 0;
+      transition: opacity 0.35s ease;
+    }
+
+    .rm-section.rm-active {
+      display: block;
+      opacity: 1;
+    }
+
+    .rm-cards {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(190px, 1fr));
+      gap: 1rem;
+      margin: 1.5rem 0 1.5rem;
+    }
+
+    .rm-card {
+      border-radius: 18px;
+      padding: 1rem 1.1rem;
+      background: rgba(7, 7, 12, 0.9);
+      border: 1px solid rgba(255, 255, 255, 0.04);
+      box-shadow: 0 12px 35px rgba(0, 0, 0, 0.8);
+    }
+
+    .rm-card h3 {
+      margin: 0 0 0.35rem;
+      font-size: 0.85rem;
+      text-transform: uppercase;
+      letter-spacing: 0.12em;
+      color: #b6b6c5;
+    }
+
+    .rm-card strong {
+      font-size: 1.35rem;
+      font-weight: 600;
+    }
+
+    .rm-card small {
+      display: block;
+      margin-top: 0.25rem;
+      font-size: 0.75rem;
+      color: #777892;
+    }
+
+    .rm-section-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin-bottom: 0.9rem;
+    }
+
+    .rm-section-header h2 {
+      margin: 0;
+      font-size: 1rem;
+      text-transform: uppercase;
+      letter-spacing: 0.16em;
+    }
+
+    .rm-badge {
+      font-size: 0.7rem;
+      padding: 0.25rem 0.6rem;
+      border-radius: 999px;
+      border: 1px solid rgba(212, 175, 55, 0.7);
+      color: #f6d46b;
+      text-transform: uppercase;
+      letter-spacing: 0.14em;
+    }
+
+    .rm-table-wrapper {
+      border-radius: 18px;
+      background: rgba(7, 7, 12, 0.94);
+      border: 1px solid rgba(255, 255, 255, 0.04);
+      box-shadow: 0 18px 45px rgba(0, 0, 0, 0.9);
+      overflow: hidden;
+    }
+
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      font-size: 0.8rem;
+    }
+
+    thead {
+      background: rgba(12, 12, 18, 0.98);
+    }
+
+    th, td {
+      padding: 0.65rem 0.75rem;
+      text-align: left;
+      border-bottom: 1px solid rgba(255, 255, 255, 0.04);
+      white-space: nowrap;
+    }
+
+    th {
+      font-size: 0.75rem;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: #b6b6c5;
+    }
+
+    tbody tr:nth-child(even) {
+      background: rgba(5, 5, 9, 0.86);
+    }
+
+    tbody tr:hover {
+      background: rgba(212, 175, 55, 0.08);
+    }
+
+    .rm-chip {
+      padding: 0.2rem 0.6rem;
+      border-radius: 999px;
+      font-size: 0.7rem;
+      text-transform: uppercase;
+      letter-spacing: 0.1em;
+    }
+
+    .rm-chip-pendiente {
+      background: rgba(255, 193, 7, 0.08);
+      color: #f6d46b;
+      border: 1px solid rgba(255, 193, 7, 0.5);
+    }
+
+    .rm-chip-confirmado {
+      background: rgba(40, 167, 69, 0.08);
+      color: #9BE7B2;
+      border: 1px solid rgba(40, 167, 69, 0.56);
+    }
+
+    .rm-chip-realizado {
+      background: rgba(0, 123, 255, 0.08);
+      color: #69B9FF;
+      border: 1px solid rgba(0, 123, 255, 0.5);
+    }
+
+    .rm-chip-cancelado {
+      background: rgba(220, 53, 69, 0.08);
+      color: #ff4d6a;
+      border: 1px solid rgba(220, 53, 69, 0.6);
+    }
+
+    .rm-btn-mini {
+      border-radius: 999px;
+      border: 0;
+      font-size: 0.7rem;
+      text-transform: uppercase;
+      letter-spacing: 0.12em;
+      padding: 0.3rem 0.7rem;
+      cursor: pointer;
+      background: rgba(255, 255, 255, 0.03);
+      color: #f6f6f6;
+      margin-right: 0.25rem;
+      transition: background 0.15s ease, transform 0.08s ease;
+    }
+
+    .rm-btn-mini:hover {
+      background: rgba(212, 175, 55, 0.25);
+      transform: translateY(-1px);
+    }
+
+    .rm-form-inline {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+      gap: 0.6rem;
+      margin-bottom: 0.9rem;
+      font-size: 0.8rem;
+    }
+
+    .rm-form-inline input,
+    .rm-form-inline select,
+    .rm-form-inline textarea {
+      width: 100%;
+      padding: 0.45rem 0.6rem;
+      border-radius: 12px;
+      border: 1px solid rgba(255, 255, 255, 0.16);
+      background: rgba(5,5,9,0.96);
+      color: #f6f6f6;
+      font-size: 0.8rem;
+      outline: none;
+      resize: vertical;
+      min-height: 38px;
+    }
+
+    .rm-form-inline input:focus,
+    .rm-form-inline select:focus,
+    .rm-form-inline textarea:focus {
+      border-color: #d4af37;
+      box-shadow: 0 0 0 1px rgba(212, 175, 55, 0.6);
+    }
+
+    .rm-btn-gold {
+      border-radius: 999px;
+      border: 0;
+      cursor: pointer;
+      padding: 0.55rem 1rem;
+      font-size: 0.8rem;
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 0.14em;
+      background: linear-gradient(135deg, #f6d46b, #d4af37);
+      color: #050509;
+      box-shadow: 0 12px 28px rgba(0, 0, 0, 0.85);
+      transition: transform 0.12s ease, box-shadow 0.12s ease, filter 0.12s ease;
+    }
+
+    .rm-btn-gold:hover {
+      transform: translateY(-1px);
+      filter: brightness(1.05);
+      box-shadow: 0 18px 40px rgba(0,0,0,0.92);
+    }
+
+    .rm-btn-gold:active {
+      transform: translateY(1px) scale(0.99);
+      box-shadow: 0 10px 20px rgba(0,0,0,0.8);
+    }
+
+    .rm-helper {
+      font-size: 0.72rem;
+      color: #777892;
+      margin-top: 0.2rem;
+    }
+
+    .rm-status-text {
+      font-size: 0.75rem;
+      color: #b6b6c5;
+      margin-bottom: 0.5rem;
+    }
+
+    .rm-empty {
+      padding: 0.9rem;
+      font-size: 0.8rem;
+      color: #777892;
+    }
+
+    .rm-switch {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.25rem;
+      font-size: 0.7rem;
+      cursor: pointer;
+    }
+
+    .rm-switch input {
+      display: none;
+    }
+
+    .rm-switch-pill {
+      width: 32px;
+      height: 16px;
+      border-radius: 999px;
+      background: rgba(255,255,255,0.2);
+      position: relative;
+      transition: background 0.15s ease;
+    }
+
+    .rm-switch-knob {
+      width: 14px;
+      height: 14px;
+      border-radius: 50%;
+      background: #f6f6f6;
+      position: absolute;
+      top: 1px;
+      left: 1px;
+      transition: transform 0.15s ease;
+    }
+
+    .rm-switch input:checked + .rm-switch-pill {
+      background: rgba(212,175,55,0.8);
+    }
+
+    .rm-switch input:checked + .rm-switch-pill .rm-switch-knob {
+      transform: translateX(16px);
+    }
+
+    /* Modal detalle reserva */
+    .rm-modal { position: fixed; inset: 0; display: flex; align-items: center; justify-content: center; z-index: 60; }
+    .rm-modal-backdrop { position: absolute; inset: 0; background: rgba(0,0,0,0.6); backdrop-filter: blur(3px); }
+    .rm-modal-content { position: relative; background: #08080b; border-radius: 12px; padding: 1rem; width: min(720px, 96%); max-height: 80vh; overflow:auto; border:1px solid rgba(255,255,255,0.06); }
+
+    @media (max-width: 900px) {
+      .rm-admin-layout {
+        grid-template-columns: 1fr;
+      }
+      .rm-sidebar {
+        display: none; /* para simplificar en móvil por ahora */
+      }
+      .rm-topbar {
+        padding-inline: 1.1rem;
+      }
+      .rm-main-content {
+        padding-inline: 1.1rem;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <div class="rm-admin-layout">
+    <!-- SIDEBAR -->
+    <aside class="rm-sidebar">
+      <div class="rm-sidebar-logo">
+        <h1>REVERENCIA&nbsp;MAJESTAD</h1>
+        <span>Panel Administrativo</span>
+      </div>
+
+      <nav class="rm-nav">
+        <button class="rm-nav-btn rm-active" data-section="dashboard">
+          <span>Dashboard</span>
+          <small>Hoy</small>
+        </button>
+        <button class="rm-nav-btn" data-section="reservas">
+          <span>Reservas</span>
+          <small>Agenda</small>
+        </button>
+        <button class="rm-nav-btn" data-section="productos">
+          <span>Productos</span>
+          <small>Catálogo</small>
+        </button>
+        <button class="rm-nav-btn" data-section="servicios">
+          <span>Servicios</span>
+          <small>Próx.</small>
+        </button>
+        <button class="rm-nav-btn" data-section="usuarios">
+          <span>Usuarios</span>
+          <small>Próx.</small>
+        </button>
+      </nav>
+
+      <div class="rm-sidebar-footer">
+        Versión 1.0 · Base Firebase  
+        <br>Próximo paso: productos, servicios, aliados y afiliados.
+      </div>
+    </aside>
+
+    <!-- MAIN -->
+    <main class="rm-main">
+      <!-- TOPBAR -->
+      <header class="rm-topbar">
+        <div class="rm-topbar-title">
+          <h2>PANEL ADMINISTRATIVO</h2>
+          <span>Control de reservas · Reverencia Majestad</span>
+        </div>
+
+        <div class="rm-topbar-user">
+          <div id="currentUser" class="rm-pill">Cargando usuario…</div>
+          <button id="logoutBtn" class="rm-logout-btn">Cerrar sesión</button>
+        </div>
+      </header>
+
+      <section class="rm-main-content">
+        <!-- DASHBOARD -->
+        <section id="section-dashboard" class="rm-section rm-active">
+          <div class="rm-cards">
+            <article class="rm-card">
+              <h3>Reservas de hoy</h3>
+              <strong id="statReservasHoy">0</strong>
+              <small>Incluye reservas confirmadas y pendientes.</small>
+            </article>
+
+            <article class="rm-card">
+              <h3>Reservas pendientes</h3>
+              <strong id="statPendientes">0</strong>
+              <small>Acción recomendada: confirmar o reagendar.</small>
+            </article>
+
+            <article class="rm-card">
+              <h3>Reservas confirmadas</h3>
+              <strong id="statConfirmadas">0</strong>
+              <small>Listas para ejecución de servicio.</small>
+            </article>
+
+            <article class="rm-card">
+              <h3>Origen web / WhatsApp</h3>
+              <strong id="statOrigen">0</strong>
+              <small>Próx. se separa por canal y campaña.</small>
+            </article>
+          </div>
+        </section>
+
+        <!-- RESERVAS -->
+        <section id="section-reservas" class="rm-section">
+          <div class="rm-section-header">
+            <div>
+              <h2>Reservas</h2>
+              <p class="rm-helper">Aquí ves todas las reservas y puedes cambiar su estado en tiempo real.</p>
+            </div>
+            <div class="rm-badge">Tiempo real · Firebase</div>
+          </div>
+
+          <!-- Formulario para cargar reserva manual -->
+          <form id="formNuevaReserva">
+            <div class="rm-form-inline">
+              <input type="text" id="nrNombre" placeholder="Nombre de la clienta" required />
+              <input type="text" id="nrTelefono" placeholder="WhatsApp / Teléfono" required />
+              <input type="text" id="nrServicio" placeholder="Servicio (ej: Balayage Deluxe)" required />
+              <input type="datetime-local" id="nrFechaHora" required />
+              <select id="nrFuente" required>
+                <option value="">Origen</option>
+                <option value="web">Web</option>
+                <option value="whatsapp">WhatsApp</option>
+                <option value="instagram">Instagram</option>
+                <option value="hotel">Hotel aliado</option>
+                <option value="otro">Otro</option>
+              </select>
+              <button type="submit" class="rm-btn-gold">Agregar reserva</button>
+            </div>
+            <p class="rm-helper">Las reservas creadas aquí se guardan en Firestore y se actualizan en tiempo real.</p>
+            <p id="nrEstado" class="rm-status-text"></p>
+          </form>
+
+          <div class="rm-table-wrapper">
+            <table>
+              <thead>
+                <tr>
+                  <th>Nombre</th>
+                  <th>Fecha</th>
+                  <th>Hora</th>
+                  <th>Estado de pago</th>
+                  <th>Modalidad</th>
+                  <th>Monto</th>
+                  <th>Teléfono</th>
+                  <th>Dirección</th>
+                  <th>Acciones</th>
+                </tr>
+              </thead>
+              <tbody id="tbodyReservas">
+                <tr>
+                  <td colspan="9" class="rm-empty">Cargando reservas…</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+          
+          <!-- Modal de detalle de reserva -->
+          <div id="reservaModal" class="rm-modal" style="display:none;">
+            <div class="rm-modal-backdrop"></div>
+            <div class="rm-modal-content">
+              <header style="display:flex;justify-content:space-between;align-items:center;">
+                <h3 style="margin:0;">Detalle de reserva</h3>
+                <button id="closeReservaModal" class="rm-btn-mini">Cerrar</button>
+              </header>
+              <div id="reservaModalBody" style="margin-top:0.8rem; font-size:0.9rem; line-height:1.4;"></div>
+            </div>
+          </div>
+        </section>
+
+        <!-- PRODUCTOS -->
+<section id="section-productos" class="rm-section">
+  <div class="rm-section-header">
+    <div>
+      <h2>Productos</h2>
+      <p class="rm-helper">
+        Gestiona el catálogo premium: glitters, minoxidil, extensiones, joyas y más.
+      </p>
+    </div>
+    <div class="rm-badge">Catálogo · Firestore + Storage</div>
+  </div>
+
+  <!-- FORMULARIO DE PRODUCTO -->
+  <form id="formProducto" enctype="multipart/form-data">
+    <input type="hidden" id="productoId">
+
+    <div class="rm-form-inline">
+      <input type="text" id="productoNombre" placeholder="Nombre del producto" required>
+
+      <select id="productoCategoria" required>
+        <option value="">Categoría</option>
+        <option value="glitter">Glitter</option>
+        <option value="minoxidil">Minoxidil</option>
+        <option value="extensiones">Extensiones</option>
+        <option value="joyas">Joyas</option>
+        <option value="otro">Otro</option>
+      </select>
+
+      <input type="number" id="productoPrecio" min="0" step="100" placeholder="Precio (CLP)" required>
+
+      <input type="number" id="productoStock" min="0" step="1" placeholder="Stock" required>
+
+      <label class="rm-switch">
+        <input type="checkbox" id="productoVisible" checked>
+        <span class="rm-switch-pill">
+          <span class="rm-switch-knob"></span>
+        </span>
+        <span>Visible</span>
+      </label>
+
+      <button type="submit" class="rm-btn-gold" id="btnSubmitProducto">Guardar</button>
+
+      <button type="button" class="rm-btn-mini" id="btnCancelEditProducto" style="display:none;">
+        Cancelar edición
+      </button>
+    </div>
+
+    <div class="rm-form-inline">
+      <textarea id="productoDescripcion" placeholder="Descripción del producto"></textarea>
+
+      <div>
+        <label style="display:block; margin-bottom:0.35rem; font-size:0.75rem; text-transform:uppercase; letter-spacing:0.1em; color:#b6b6c5;">Imagen del producto</label>
+        <input type="file" id="prodImagen" accept="image/*" style="margin-bottom:0.35rem;">
+        <button type="button" class="rm-btn-mini" id="btnGenerarIA" style="margin-bottom:0.35rem;">Generar con IA</button>
+        <p id="previewImagenProducto" class="rm-helper">Sin imagen seleccionada.</p>
+      </div>
+    </div>
+
+    <p id="prodEstado" class="rm-status-text"></p>
+  </form>
+
+  <!-- TABLA DE PRODUCTOS -->
+  <div class="rm-table-wrapper" style="margin-top:1rem;">
+    <table>
+      <thead>
+        <tr>
+          <th>Portada</th>
+          <th>Nombre</th>
+          <th>Categoría</th>
+          <th>Precio</th>
+          <th>Stock</th>
+          <th>Visible</th>
+          <th>Acciones</th>
+        </tr>
+      </thead>
+      <tbody id="tbodyProductos">
+        <tr>
+          <td colspan="7" class="rm-empty">Cargando productos…</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</section>
+
+
+        <!-- OTRAS SECCIONES PLACEHOLDER -->
+        <section id="section-servicios" class="rm-section">
+          <div class="rm-section-header">
+            <h2>Servicios (próxima etapa)</h2>
+          </div>
+          <p class="rm-helper">
+            Matriz de servicios, duración, precio base, comisiones, paquetes VIP, etc.
+          </p>
+        </section>
+
+        <section id="section-usuarios" class="rm-section">
+          <div class="rm-section-header">
+            <h2>Usuarios y roles (próxima etapa)</h2>
+          </div>
+          <p class="rm-helper">
+            Administración de colaboradores, aliados de hotel, afiliados y niveles de acceso.
+          </p>
+        </section>
+      </section>
+    </main>
+  </div>
+
+  <script src="../assets/js/admin.js"></script>
+
+</body>
+</html>

@@ -1,0 +1,138 @@
+/* ============================================
+   CORE: Reset + Tipografías + Layout Base
+   ============================================ */
+
+/* RESET GLOBAL */
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+/* Suavidad de scroll */
+html {
+  scroll-behavior: smooth;
+}
+
+/* BODY GLOBAL */
+body.rm-body {
+  font-family: var(--font-primary);
+  background: var(--background-light);
+  color: var(--text-dark);
+  line-height: 1.6;
+  -webkit-font-smoothing: antialiased;
+}
+
+/* ============================================
+   CONTENEDORES
+   ============================================ */
+
+.container {
+  width: min(var(--max-width), 100% - 2rem);
+  margin-inline: auto;
+}
+
+/* ============================================
+   TIPOGRAFÍAS BASE
+   ============================================ */
+
+h1, h2, h3, h4 {
+  font-family: "Playfair Display", serif;
+  font-weight: 600;
+  letter-spacing: 0.04em;
+  color: #ffffff;
+}
+
+p {
+  color: #f5f5f5;
+  line-height: 1.75;
+}
+
+/* ============================================
+   SECCIONES BASE
+   ============================================ */
+
+.rm-section {
+  padding-block: 5rem;
+}
+
+.rm-section-title {
+  font-size: clamp(1.9rem, 3vw, 2.4rem);
+  text-align: center;
+  margin-bottom: 0.8rem;
+  text-transform: uppercase;
+  font-weight: 700;
+}
+
+.rm-section-sub {
+  text-align: center;
+  font-size: 0.98rem;
+  max-width: 640px;
+  margin: 0 auto 2.5rem;
+  opacity: 0.8;
+  line-height: 1.7;
+}
+
+/* ============================================
+   ENLACES Y BOTONES
+   ============================================ */
+
+a {
+  color: inherit;
+  text-decoration: none;
+}
+
+button {
+  font-family: inherit;
+  cursor: pointer;
+  border: none;
+  background: none;
+}
+
+/* ============================================
+   IMÁGENES
+   ============================================ */
+
+img {
+  max-width: 100%;
+  display: block;
+  height: auto;
+  object-fit: cover;
+}
+
+/* ============================================
+   LISTAS
+   ============================================ */
+ul {
+  list-style: none;
+}
+
+/* ============================================
+   UTILIDADES BASE
+   ============================================ */
+
+.text-center {
+  text-align: center;
+}
+
+.text-muted {
+  opacity: 0.7;
+}
+
+.flex {
+  display: flex;
+  align-items: center;
+}
+
+.grid {
+  display: grid;
+}
+
+.hidden {
+  display: none !important;
+}
+.overflow-hidden {
+  overflow: hidden;
+}

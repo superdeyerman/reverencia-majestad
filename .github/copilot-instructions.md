@@ -1,77 +1,36 @@
 # Copilot Instructions for reverencia-majestad
 
-## Project Overview
-This is a **static website project** for "Reverencia Majestad" (a mobile hair & spa service) hosted on Firebase Hosting. The entire site is a single-page landing page with no build step - deployment is direct from the `public/` directory.
+## Resumen rápido
+Proyecto estático: landing page única en `public/index.html` desplegada en Firebase Hosting. No hay paso de construcción real — `npm run build` es un mensaje informativo (ver `package.json`).
 
-**Key Architecture Decisions:**
-- **No build process**: `npm run build` is a no-op. The site is purely static HTML/CSS in `public/index.html`
-- **Firebase hosting rewrites**: All routes redirect to `index.html` (configured in `firebase.json`)
-- **CI/CD via GitHub Actions**: Automatic deployments on merge to `main` branch and preview deploys on PRs
+## Arquitectura y por qué
+- `public/` contiene todo: HTML + CSS inline. Diseño pensado para cambios directos en ese archivo.
+- `firebase.json` tiene la regla de rewrite: todas las rutas devuelven `index.html` (sitio single‑page).
+- CI: GitHub Actions despliega automáticamente desde `.github/workflows/` (merge → `live`, PR → preview).
 
-## File Structure
+## Patrones y convenciones del proyecto
+- CSS inline con variables en `:root` (ej.: `--gold`, `--gold2`) — mantener la paleta y efectos de glassmorphism.
+- Tipografías responsivas usan `clamp()`; efectos visuales en `h1` por `background-clip: text`.
+- Evitar agregar JS o dependencias innecesarias: este repositorio pretende seguir sin build ni runtime extra.
 
-```
-public/index.html          # The entire website (single landing page with inline CSS)
-firebase.json              # Hosting config: public dir, rewrites rules
-.firebaserc                # Firebase project ID: reverenciamajestad-dd2ba
-.github/workflows/         # GitHub Actions CI/CD pipelines
-├── firebase-hosting-merge.yml        # Deploys to live on main branch push
-└── firebase-hosting-pull-request.yml # Preview deploy on PR (runs build + deploy)
-```
+## Flujo de desarrollo y comandos útiles
+- Probar localmente: abrir `public/index.html` en el navegador.
+- Emulador Firebase (si procede): `firebase emulators:start` (requiere Firebase CLI configurado).
+- CI en PRs ejecuta `npm ci && npm run build` pero `build` es un eco — no genera artefactos.
 
-## Website Styling & Markup Patterns
+## Archivos clave (ejemplos)
+- `public/index.html` — HTML/CSS principal; cambiar `href` del botón de Instagram para actualizar la red social.
+- `firebase.json` — configurar `public` y rewrites.
+- `.firebaserc` — proyecto por defecto `reverenciamajestad-dd2ba`.
+- `.github/workflows/firebase-hosting-merge.yml` — despliegue en `main` → canal `live`.
+- `.github/workflows/firebase-hosting-pull-request.yml` — preview para PRs (usa `FIREBASE_SERVICE_ACCOUNT_REVERENCIAMAJESTAD_DD2BA` en el archivo generado).
 
-The `public/index.html` uses **inline CSS with CSS custom properties** for theming:
+## Seguridad y secretos
+- No agregar credenciales al repo. Las Actions esperan secretos: `FIREBASE_SERVICE_ACCOUNT` (deploy en merge) y `FIREBASE_SERVICE_ACCOUNT_REVERENCIAMAJESTAD_DD2BA` (PR preview).
 
-```css
-:root {
-  --bg: #0b0b0b;         /* Dark background */
-  --text: #f7f3e8;       /* Light text */
-  --gold: #f5d26b;       /* Primary accent */
-  --gold2: #b9912b;      /* Secondary gold (darker) */
-}
-```
+## Qué pedirle a la AI / tareas comunes
+- Cambios de contenido o estilo: editar `public/index.html` directamente; mantener variables CSS y estética dorada.
+- Añadir páginas: crear HTML nuevos en `public/` y actualizar `firebase.json` si quieres rutas separadas (actualmente todas rewriten a `index.html`).
+- Actualizar CI: mirar workflows en `.github/workflows/` y mantener `projectId: reverenciamajestad-dd2ba` si se cambia el proyecto.
 
-**Key visual patterns:**
-- Gradient text effect on h1: `background-clip: text` with gold gradients
-- Frosted glass effect on card: `backdrop-filter: blur()` + semi-transparent background
-- Responsive typography: Uses `clamp()` for fluid sizing across viewport widths
-- Dark theme with radial gradient background emanating from top center
-- Subtle hover states: Transform + filter brightness changes on buttons
-
-When modifying styles, maintain this **luxury/glamour aesthetic** with gold accents and glassmorphism effects.
-
-## Deployment Pipeline
-
-**Local testing:**
-- No build step needed. Open `public/index.html` directly in browser to test
-- Firebase emulation: Run `firebase emulators:start` if testing Hosting behavior locally
-
-**Deployment triggers:**
-1. **Main branch push** → `firebase-hosting-merge.yml` → Deploys to LIVE (channelId: live)
-2. **Pull request** → `firebase-hosting-pull-request.yml` → Creates preview channel + checks
-
-**Required secrets for CI/CD:**
-- `FIREBASE_SERVICE_ACCOUNT`: Service account JSON for deployment auth
-- `GITHUB_TOKEN`: Provided automatically by GitHub Actions
-
-The Firebase project ID is `reverenciamajestad-dd2ba` (hardcoded in workflows and `.firebaserc`).
-
-## Common Tasks
-
-**Editing the landing page:** Modify HTML structure and inline CSS in `public/index.html`. No build required.
-
-**Testing before deployment:** Open the HTML file in a browser. Changes are live immediately.
-
-**Updating content:** Tagline, headings, Instagram link, and copyright are in the HTML body. Update the `href` attribute on the Instagram button to change the destination.
-
-**Adding new pages:** Currently single-page. To add routes, you'd need to update Firebase rewrites in `firebase.json` and create new HTML files.
-
-## Development Environment
-
-- **Package manager**: npm (minimal setup; no dependencies)
-- **Hosting**: Firebase Hosting (Google Cloud Platform)
-- **CI/CD**: GitHub Actions (auto-triggered on push/PR)
-- **Language**: HTML5 + vanilla CSS (no JavaScript, no frameworks)
-
-No special tools or build processes required—edit, commit, push to main to deploy.
+Si algo no está claro (por ejemplo, si quieres internacionalizar o añadir analytics), pregunta antes de cambiar workflows o añadir dependencias.

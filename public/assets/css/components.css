@@ -1,0 +1,429 @@
+/* ============================================
+   COMPONENTES REVERENCIA MAJESTAD (VERSACE)
+   ============================================ */
+
+/* ============================================
+   HEADER / NAV
+   ============================================ */
+
+.rm-header {
+  position: sticky;
+  top: 0;
+  z-index: 40;
+  backdrop-filter: blur(20px);
+  background: rgba(5, 5, 9, 0.75);
+  border-bottom: 1px solid rgba(212, 175, 55, 0.22);
+}
+
+.rm-nav {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  height: 72px;
+}
+
+/* LOGO */
+.rm-logo {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+}
+
+.rm-logo-circle {
+  width: 42px;
+  height: 42px;
+  border-radius: 999px;
+  border: 2px solid var(--rm-gold);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-family: "Playfair Display", serif;
+  font-weight: 700;
+  font-size: 1rem;
+  letter-spacing: 0.1em;
+  color: var(--rm-gold-strong);
+  background: radial-gradient(circle at top, #2a2410, #050509);
+  animation: rm-logo-glow 1.8s ease-out forwards;
+}
+
+.rm-logo-text {
+  display: flex;
+  flex-direction: column;
+}
+
+.rm-logo-text .title {
+  font-size: 0.78rem;
+  letter-spacing: 0.2em;
+  color: var(--rm-gold);
+  text-transform: uppercase;
+}
+
+.rm-logo-text .subtitle {
+  font-size: 0.7rem;
+  color: var(--rm-text-muted);
+}
+
+/* MENÚ */
+.rm-menu {
+  display: flex;
+  align-items: center;
+  gap: 1.6rem;
+  font-size: 0.82rem;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+}
+
+.rm-menu a {
+  position: relative;
+  color: var(--rm-text-muted);
+  padding-bottom: 0.2rem;
+}
+
+.rm-menu a:hover {
+  color: #fff;
+}
+
+.rm-menu a::after {
+  content: "";
+  position: absolute;
+  left: 0;
+  bottom: 0;
+  width: 0%;
+  height: 1px;
+  background: linear-gradient(90deg, var(--rm-gold), var(--rm-gold-strong));
+  transition: width 0.25s ease;
+}
+
+.rm-menu a:hover::after {
+  width: 100%;
+}
+
+/* CTA */
+.rm-cta {
+  padding: 0.55rem 1.3rem;
+  border-radius: 999px;
+  border: 1px solid var(--rm-gold);
+  background: linear-gradient(135deg, var(--rm-gold), var(--rm-gold-strong));
+  color: #161616;
+  font-size: 0.78rem;
+  font-weight: 600;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  box-shadow: 0 12px 28px rgba(243, 198, 118, 0.35);
+  transition: 0.2s ease;
+}
+
+.rm-cta:hover {
+  transform: translateY(-1px);
+  box-shadow: 0 16px 36px rgba(243, 198, 118, 0.55);
+}
+
+/* ============================================
+   HERO COMPLETO
+   ============================================ */
+
+.rm-hero {
+  padding-block: 6rem 5rem;
+}
+
+/* GRID */
+.rm-hero-container {
+  display: grid;
+  grid-template-columns: minmax(0, 1.1fr) minmax(0, 1fr);
+  align-items: center;
+  gap: 3rem;
+}
+
+/* IZQUIERDA */
+.rm-hero-left {
+  display: flex;
+  flex-direction: column;
+  gap: 1.4rem;
+  opacity: 0;
+  animation: rm-fade-in 1.4s ease forwards;
+}
+
+/* PILL */
+.rm-pill {
+  display: inline-flex;
+  padding: 0.35rem 1rem;
+  border-radius: 999px;
+  border: 1px solid rgba(243, 198, 118, 0.4);
+  font-size: 0.72rem;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: var(--rm-gold);
+}
+
+/* TÍTULO */
+.rm-hero-title {
+  font-size: clamp(2.4rem, 4vw, 3.4rem);
+  line-height: 1.15;
+  font-weight: 700;
+  max-width: 600px;
+}
+
+.rm-hero-title span {
+  color: var(--rm-gold);
+}
+
+/* TEXTO */
+.rm-hero-text {
+  font-size: 1rem;
+  max-width: 480px;
+  color: var(--rm-text-muted);
+  line-height: 1.8;
+}
+
+/* BOTONES */
+.rm-hero-buttons {
+  display: flex;
+  gap: 1rem;
+  flex-wrap: wrap;
+}
+
+.btn-primary {
+  padding: 0.9rem 1.9rem;
+  background: linear-gradient(135deg, var(--rm-gold), var(--rm-gold-strong));
+  border-radius: 999px;
+  border: 1px solid var(--rm-gold);
+  color: #1b1b1b;
+  font-size: 0.82rem;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  font-weight: 600;
+  box-shadow: 0 18px 38px rgba(243, 198, 118, 0.5);
+  transition: 0.2s ease;
+}
+
+.btn-primary:hover {
+  transform: translateY(-1px);
+  box-shadow: 0 22px 45px rgba(243, 198, 118, 0.65);
+}
+
+.btn-outline {
+  padding: 0.9rem 1.9rem;
+  border-radius: 999px;
+  border: 1px solid rgba(243, 198, 118, 0.5);
+  color: var(--rm-gold-strong);
+  font-size: 0.82rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.14em;
+  transition: 0.2s ease;
+}
+
+.btn-outline:hover {
+  background: rgba(243, 198, 118, 0.1);
+  border-color: var(--rm-gold);
+}
+
+/* DERECHA */
+.rm-hero-right {
+  display: flex;
+  justify-content: center;
+  opacity: 0;
+  animation: rm-fade-in 1.6s ease forwards;
+}
+
+.rm-hero-frame {
+  border-radius: var(--rm-radius-lg);
+  padding: 0.45rem;
+  background: radial-gradient(circle at top left, rgba(243, 198, 118, 0.45), transparent);
+  box-shadow: var(--rm-shadow-soft);
+  overflow: hidden;
+}
+
+.rm-hero-frame img {
+  border-radius: calc(var(--rm-radius-lg) - 6px);
+  transition: 0.5s ease;
+}
+
+.rm-hero-frame:hover img {
+  transform: scale(1.03);
+}
+
+/* ============================================
+   ABOUT, GRID, PRODUCTOS, RESERVA, CONTACTO
+   ============================================ */
+
+.grid-3 {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 1.6rem;
+}
+
+/* ABOUT */
+.rm-about-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 1.6rem;
+  color: var(--rm-text-muted);
+}
+
+/* PRODUCTOS */
+.rm-product {
+  text-align: center;
+  padding: 1.5rem;
+  border-radius: var(--rm-radius-md);
+  border: 1px solid rgba(243, 198, 118, 0.25);
+  background: linear-gradient(145deg, rgba(255, 255, 255, 0.03), rgba(243, 198, 118, 0.05));
+  box-shadow: var(--rm-shadow-soft);
+}
+
+.rm-product img {
+  border-radius: 12px;
+  margin-bottom: 1rem;
+}
+
+.rm-product h3 {
+  font-size: 1rem;
+  letter-spacing: 0.14em;
+  margin-bottom: 0.4rem;
+}
+
+.rm-product-price {
+  font-size: 0.95rem;
+  color: var(--rm-gold);
+  font-weight: 600;
+}
+
+/* RESERVA */
+.rm-reserva-box {
+  max-width: 520px;
+  margin-inline: auto;
+  padding: 2rem;
+  text-align: center;
+  border-radius: var(--rm-radius-lg);
+  border: 1px solid rgba(243, 198, 118, 0.3);
+  background: linear-gradient(145deg, rgba(243, 198, 118, 0.1), rgba(255, 255, 255, 0.03));
+  box-shadow: var(--rm-shadow-soft);
+}
+
+/* CONTACTO */
+.rm-contact-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 1.5rem;
+}
+
+.rm-contact-link {
+  color: var(--rm-gold);
+  font-weight: 500;
+  margin-top: 0.3rem;
+}
+
+/* FOOTER */
+.rm-footer-inner {
+  display: flex;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: 1rem;
+  color: var(--rm-text-muted);
+}
+
+/* ============================================
+   ANIMACIONES
+   ============================================ */
+
+@keyframes rm-logo-glow {
+  0% {
+    opacity: 0;
+    transform: scale(0.92);
+    filter: drop-shadow(0 0 0px rgba(243, 198, 118, 0));
+  }
+  60% {
+    opacity: 1;
+    transform: scale(1);
+    filter: drop-shadow(0 0 14px rgba(243, 198, 118, 0.55));
+  }
+  100% {
+    filter: drop-shadow(0 0 6px rgba(243, 198, 118, 0.32));
+  }
+}
+
+@keyframes rm-fade-in {
+  from { opacity: 0; transform: translateY(12px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+@keyframes rm-slide-up {
+  from { opacity: 0; transform: translateY(20px); }
+  to   { opacity: 1; transform: translateY(0); }
+} .rm-reserva-wrapper {
+  max-width: 700px;
+  margin-inline: auto;
+  background: rgba(0,0,0,0.45);
+  border: 1px solid rgba(212,175,55,0.25);
+  padding: 2rem;
+  border-radius: 1.2rem;
+  backdrop-filter: blur(12px);
+}
+
+.rm-reserva-step {
+  margin-bottom: 1.2rem;
+}
+
+.rm-label {
+  font-size: 0.8rem;
+  text-transform: uppercase;
+  letter-spacing: 0.18em;
+  color: var(--rm-gold);
+}
+
+.rm-input {
+  width: 100%;
+  margin-top: 0.4rem;
+  padding: 0.75rem;
+  border-radius: 0.7rem;
+  border: 1px solid rgba(212,175,55,0.22);
+  background: #0b0b12;
+  color: var(--rm-text);
+}
+
+.rm-input:focus {
+  outline: none;
+  border-color: var(--rm-gold);
+}
+
+.rm-horarios-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit,minmax(120px,1fr));
+  gap: 0.5rem;
+  margin-top: 0.4rem;
+}
+
+.rm-horario-btn {
+  padding: 0.6rem 0.5rem;
+  border-radius: 0.7rem;
+  border: 1px solid rgba(212,175,55,0.2);
+  background: #0d0d14;
+  color: var(--rm-text-muted);
+  cursor: pointer;
+  font-size: 0.85rem;
+  transition: 0.18s;
+}
+
+.rm-horario-btn:hover {
+  border-color: var(--rm-gold);
+  color: var(--rm-text);
+}
+
+.rm-horario-btn.selected {
+  background: var(--rm-gold);
+  color: #000;
+  border-color: var(--rm-gold-strong);
+}
+
+.rm-exito {
+  padding: 0.8rem 1rem;
+  border-radius: 0.7rem;
+  border: 1px solid var(--rm-gold);
+  background: rgba(212,175,55,0.12);
+  font-size: 0.85rem;
+  color: var(--rm-gold-strong);
+  line-height: 1.6;
+}
+
+.hidden {
+  display: none;
+}

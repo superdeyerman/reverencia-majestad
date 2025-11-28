@@ -3,7 +3,32 @@
   "version": "1.0.0",
   "private": true,
   "scripts": {
-    "build": "echo \"(sin build, sitio estático)\""
+    "build": "echo \"(sin build, sitio estático)\"",
+    "lint": "eslint \"public/**/*.{js}\" --ext .js",
+    "format": "prettier --write \"public/**/*.{js,html,css}\"",
+    "prepare": "husky install"
+  },
+  "devDependencies": {
+    "eslint": "^8.45.0",
+    "prettier": "^2.8.8",
+    "eslint-config-prettier": "^9.0.0",
+    "eslint-plugin-import": "^2.27.5",
+    "husky": "^8.0.0",
+    "lint-staged": "^14.0.0"
+  },
+  "lint-staged": {
+    "*.js": [
+      "eslint --fix",
+      "git add"
+    ],
+    "*.html": [
+      "prettier --write",
+      "git add"
+    ],
+    "*.css": [
+      "prettier --write",
+      "git add"
+    ]
   }
 }
 

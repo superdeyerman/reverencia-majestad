@@ -1,0 +1,169 @@
+{
+  "designSystem": {
+    "name": "Versace-Inspired Luxury Editorial",
+    "version": "1.1.0",
+    "notes": "Actualizado para incluir el patrón de Modal (Popup) y la técnica de enfoque visual mediante atenuación de fondo.",
+    
+    "colors": {
+      "palette": {
+        "primary-brand": {
+          "name": "Deep Crimson",
+          "hex": "#AA0000",
+          "description": "Color de acento principal, usado para elementos clave o llamadas a la acción en contraste."
+        },
+        "accent-gold": {
+          "name": "Yellow Gold",
+          "hex": "#C9AE61",
+          "description": "Detalles metálicos, iconos y acentos sutiles de lujo."
+        },
+        "text-dark": {
+          "name": "Black",
+          "hex": "#000000",
+          "description": "Color principal para el cuerpo de texto, navegación y fondos de alto contraste."
+        },
+        "background-light": {
+          "name": "Off-White / Cream",
+          "hex": "#FAFAFA",
+          "description": "Fondo principal de la aplicación/web y para el interior de modales, priorizando el espacio en blanco."
+        },
+        "neutral-subtle": {
+          "name": "Light Beige",
+          "hex": "#E0DCCF",
+          "description": "Para fondos de secciones secundarias o sutiles separadores."
+        },
+        "footer-background": {
+          "name": "Dark Charcoal",
+          "hex": "#1A1A1A",
+          "description": "Fondo del pie de página o barras de utilidades de alto contraste."
+        }
+      },
+      "usage": {
+        "text": "text-dark",
+        "link": "text-dark",
+        "link-hover": "primary-brand",
+        "cta-primary": "primary-brand",
+        "icon-utility": "text-dark",
+        "icon-accent": "accent-gold"
+      }
+    },
+    
+    "typography": {
+      "font-families": {
+        "primary": "Sans-serif elegante (ej. Montserrat, Raleway, o similar con buena legibilidad y espaciado)",
+        "logo-style": "Serif clásico o Sans-serif audaz (para encabezados de marca o títulos muy jerárquicos)"
+      },
+      "styles": {
+        "display-h1": {
+          "fontSize": "48px",
+          "fontWeight": 700,
+          "textTransform": "uppercase",
+          "letterSpacing": "3px",
+          "fontFamily": "logo-style"
+        },
+        "cta-on-image": {
+          "fontSize": "16px",
+          "fontWeight": 600,
+          "textTransform": "uppercase",
+          "letterSpacing": "2px",
+          "fontFamily": "primary"
+        },
+        "navigation-link": {
+          "fontSize": "12px",
+          "fontWeight": 400,
+          "textTransform": "uppercase",
+          "letterSpacing": "1.5px",
+          "fontFamily": "primary"
+        },
+        "body": {
+          "fontSize": "14px",
+          "fontWeight": 300,
+          "lineHeight": 1.6,
+          "fontFamily": "primary"
+        },
+        "caption-utility": {
+          "fontSize": "11px",
+          "fontWeight": 300,
+          "fontStyle": "italic",
+          "fontFamily": "primary"
+        }
+      }
+    },
+    
+    "layout": {
+      "grid": {
+        "type": "Fixed Width Centered",
+        "maxWidth": "1280px",
+        "gutter": "30px"
+      },
+      "spacing": {
+        "unit": "8px",
+        "x-small": "4px",
+        "small": "8px",
+        "medium": "16px",
+        "large": "40px",
+        "x-large": "80px",
+        "xx-large-section-divider": "120px"
+      },
+      "structure-patterns": [
+        "Uso intensivo de espacio en blanco ('white space') vertical para separar secciones y dar sensación de exclusividad.",
+        "El contenido principal (imágenes y CTAs) domina la pantalla, mientras que el texto es minimalista y bien espaciado.",
+        "Secciones hero con fondo de imagen completo, a menudo divididas verticalmente en dos áreas de enfoque.",
+        "**Efecto de enfoque:** Uso de fondos de imagen en blanco y negro o muy desaturados. Al usar un modal, el fondo se atenúa (darkened/blurred) para dirigir la atención exclusivamente al contenido superpuesto, que es nítido y a menudo incluye color."
+      ]
+    },
+    
+    "components": {
+      "buttons": {
+        "cta-overlay": {
+          "style": "Minimalist Box",
+          "backgroundColor": "transparent",
+          "borderColor": "text-dark",
+          "borderWidth": "1px",
+          "padding": "12px 24px",
+          "textStyle": "cta-on-image",
+          "hoverEffect": "Invertir colores (Fondo: text-dark, Texto: background-light)"
+        },
+        "gift-guide-pill": {
+          "style": "Rounded/Pill button for category selection",
+          "backgroundColor": "background-light",
+          "borderColor": "text-dark",
+          "borderWidth": "1px",
+          "padding": "10px 20px"
+        }
+      },
+      "navigation": {
+        "top-bar": {
+          "style": "Fixed, full-width, high-contrast text on light background.",
+          "height": "50px",
+          "textStyle": "navigation-link"
+        },
+        "footer": {
+          "style": "Full-width, background-color: footer-background, texto: background-light. Estructura en múltiples columnas de enlaces."
+        }
+      },
+      "form-elements": {
+        "email-input": {
+          "style": "Minimalist, solo con línea inferior (underline) o borde sutil.",
+          "borderColor": "text-dark",
+          "borderWidth": "1px (solo inferior)",
+          "requiredMarkerColor": "primary-brand"
+        }
+      },
+      "modals": {
+        "subscription-popup": {
+          "style": "Centered box, fixed position, alto contraste.",
+          "overlayColor": "text-dark",
+          "overlayOpacity": "0.7",
+          "backgroundColor": "background-light",
+          "padding": "30px",
+          "boxShadow": "Sutil (para levantar del fondo)",
+          "contentHierarchy": "Imagen (top, producto destacado, fondo blanco) > Título/Lema > Cuerpo de Texto (centrado) > Botón CTA."
+        }
+      },
+      "imagery": {
+        "style": "Editorial, fotografía de alta calidad y alto contraste. Alternancia entre imágenes editoriales en B&N (para fondo o contexto) e imágenes de producto a todo color (para enfocar).",
+        "aspectRatio": "Flexible, tendiendo a panorámico (wide) o de pantalla completa en secciones clave."
+      }
+    }
+  }
+}
